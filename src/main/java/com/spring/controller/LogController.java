@@ -18,6 +18,26 @@ public class LogController {
 
     @Autowired
     LogService logService;
+    
+    @GetMapping
+    public ResponseEntity<?> getAllLog() {
+        List<Log> listOfLog = logService.fetchAll();
+        if (listOfLog != null) {
+            return new ResponseEntity<>(listOfLog, HttpStatus.OK);
+        } else
+            return new ResponseEntity<>("No Log Found", HttpStatus.BAD_REQUEST);
+    }
+    
+    
+    @GetMapping("{id}")
+    public ResponseEntity<?> findById(@PathVariable Integer id) {
+    	Log logSearchResp = logService.findById(id);
+        if(logSearchResp != null) {
+            return new ResponseEntity<Object>(logSearchResp, HttpStatus.OK);
+        } 
+        return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+    }
+    
 
     @PostMapping
     public ResponseEntity<?> addLog(@RequestBody Log log) {
@@ -28,6 +48,19 @@ public class LogController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    
+    
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateLog(@RequestBody Log log, @PathVariable("id") Integer id) {
+        if (id > 0 && Objects.nonNull(log)) {
+            Log logUpdateResp = logService.update(log, id);
+            if (Objects.nonNull(logUpdateResp)) {
+                return new ResponseEntity<>(logUpdateResp, HttpStatus.CREATED);
+            } 
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteLog(@PathVariable("id") Integer id) {
@@ -39,32 +72,4 @@ public class LogController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAllLog() {
-        List<Log> listOfLog = logService.fetchAll();
-        if (listOfLog != null) {
-            return new ResponseEntity<>(listOfLog, HttpStatus.OK);
-        } else
-            return new ResponseEntity<>("No Log Found", HttpStatus.BAD_REQUEST);
-    }
-    
-    @GetMapping("{id}")
-    public ResponseEntity<?> findById(@PathVariable Integer id) {
-    	Log logSearchResp = logService.findById(id);
-        if(logSearchResp != null) {
-            return new ResponseEntity<Object>(logSearchResp, HttpStatus.OK);
-        } 
-        return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-    }
-    
-    @PostMapping("{id}")
-    public ResponseEntity<?> updateLog(@RequestBody Log log, @PathVariable("id") Integer id) {
-        if (id > 0 && Objects.nonNull(log)) {
-            Log logUpdateResp = logService.update(log, id);
-            if (Objects.nonNull(logUpdateResp)) {
-                return new ResponseEntity<>(logUpdateResp, HttpStatus.CREATED);
-            } 
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
 }

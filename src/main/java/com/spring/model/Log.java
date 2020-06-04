@@ -1,7 +1,5 @@
 package com.spring.model;
 
-import java.text.SimpleDateFormat;  
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,13 +14,10 @@ public class Log {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private int id;
 	
 	@Column(name="username_fk")
 	private String username;
-	
-	private String category;
 	
 	@Column(name="tag")
 	private String tag;
@@ -35,11 +30,13 @@ public class Log {
 	
 	@Column(name="log_details")
 	private String log_details; 
-	
-	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-    Date date = new Date();  
-	
     
+	public String getDateTime() {
+		return dateTime;
+	}
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
+	}
 	public int getId() {
 		return id;
 	}
@@ -52,23 +49,11 @@ public class Log {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
 	public String getTag() {
 		return tag;
 	}
 	public void setTag(String tag) {
 		this.tag = tag;
-	}
-	public String getDateTime() {
-		return formatter.format(date);
-	}
-	public void setDateTime(String string) {
-		this.dateTime = string;
 	}
 	public int getDuration() {
 		return duration;
@@ -83,4 +68,3 @@ public class Log {
 		this.log_details = log_details;
 	}
 }
-

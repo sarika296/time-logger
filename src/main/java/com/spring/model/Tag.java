@@ -10,6 +10,7 @@ import javax.persistence.Table;
 public class Tag {
 	
 	@Id
+	@Column(name="tag")
 	private String tag;
 	
 	@Column(name="category_fk")
