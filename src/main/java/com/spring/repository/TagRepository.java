@@ -8,12 +8,14 @@ import org.springframework.stereotype.Repository;
 import com.spring.model.Tag;
 
 @Repository
-public interface TagRepository extends JpaRepository<Tag, Integer> {
+public interface TagRepository extends JpaRepository<Tag, String> {
 
-	public List<Tag> existsByTag(String tag);
+	public boolean existsByTag(String tag);
 	
-	public List<Tag> findByTag(String tag);
+	public Tag findByTag(String tag);
 
 	public List<Tag> deleteByTag(String tag);
+	
+	
 
 }

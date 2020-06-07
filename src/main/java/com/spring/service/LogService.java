@@ -30,6 +30,7 @@ public class LogService {
 
 	public Log update(Log log, Integer id) {
 		if(logRepository.existsById(id)) {
+			//logRepository.deleteById(id);
 			return logRepository.save(log);
 		}
 		return null;
@@ -50,4 +51,10 @@ public class LogService {
 		}
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return logRepository.toString();
+	}
+	
 }

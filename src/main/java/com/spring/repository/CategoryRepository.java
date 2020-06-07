@@ -8,11 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.spring.model.Category;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, String> {
 
-	public List<Category> existsByCategory(String category);
-	
-	public List<Category> findByCategory(String category);
+	public boolean existsByCategory(String category);
 
 	public List<Category> deleteByCategory(String category);
 	

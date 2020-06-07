@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
  
-
 @Entity
 @Table(name = "logs")
 public class Log {
@@ -22,20 +21,38 @@ public class Log {
 	@Column(name="tag")
 	private String tag;
 	
-	@Column(name="data_time")
-	private String dateTime;
+	@Column(name="date")
+	private String date;
+	
+	@Column(name="time")
+	private String time;
 	
 	@Column(name="duration")
-	private int duration;
+	private long duration;
 	
+	@Column(name="completed")
+	private boolean completed;
+	
+	public boolean isCompleted() {
+		return completed;
+	}
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
 	@Column(name="log_details")
 	private String log_details; 
     
-	public String getDateTime() {
-		return dateTime;
+	public String getDate() {
+		return date;
 	}
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
 	}
 	public int getId() {
 		return id;
@@ -55,11 +72,11 @@ public class Log {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	public int getDuration() {
+	public long getDuration() {
 		return duration;
 	}
-	public void setDuration(int duration) {
-		this.duration = duration;
+	public void setDuration(long d) {
+		this.duration = d;
 	}
 	public String getLog_details() {
 		return log_details;

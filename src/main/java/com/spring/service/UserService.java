@@ -22,37 +22,11 @@ public class UserService {
 		return null;
 	}
 
-	
-	public List<User> findByUsername(String username) {
-		if(userRepository.existsByUsername(username) != null) {
-			return userRepository.findByUsername(username);
-		}
-		return null;
-	}
-	
-
 	public User save(User user) {
-		if(userRepository.existsByUsername(user.getUsername()) != null) {
+		if(user != null && !userRepository.existsByUsername(user.getUsername())) {
 			return userRepository.save(user);
 		}
 		return null;
 	}
-
-	
-	public User update(User user, String username) {
-		if(userRepository.existsByUsername(username) != null) {
-			return userRepository.save(user);
-		}
-		return null;
-	}
-	
-
-//	public List<User> deleteByUsername(String username) {
-//		if(userRepository.existsByUsername(username) != null) {
-//			return userRepository.deleteByUsername(username);
-//		}
-//		return null;
-//	}
-
 	
 }

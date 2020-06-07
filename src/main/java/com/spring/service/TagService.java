@@ -12,45 +12,29 @@ import com.spring.repository.TagRepository;
 public class TagService {
 
 	@Autowired
-	private TagRepository userRepository; 
+	private TagRepository tagRepository; 
 	
 	public List<Tag> fetchAll() {
-		List<Tag> listOfTag = userRepository.findAll();
+		List<Tag> listOfTag = tagRepository.findAll();
 		if(listOfTag != null) {
 			return listOfTag;
 		}
 		return null;
 	}
-
 	
-	public List<Tag> findByTagname(String tag) {
-		if(userRepository.existsByTag(tag) != null) {
-			return userRepository.findByTag(tag);
+	
+	public String findByTag(String tag) {
+		if(tagRepository.existsByTag(tag)) {
+			return tagRepository.findByTag(tag).getCategory();
 		}
 		return null;
 	}
 	
-
-	public Tag save(Tag user) {
-		if(userRepository.existsByTag(user.getTag()) != null) {
-			return userRepository.save(user);
+	
+	public Tag save(Tag tag) {
+		if(tag != null) {
+			return tagRepository.save(tag);
 		}
 		return null;
 	}
-
-	
-//	public Tag update(Tag user, String tag) {
-//		if(userRepository.existsByTag(tag) != null) {
-//			return userRepository.save(user);
-//		}
-//		return null;
-//	}
-//	
-//
-//	public List<Tag> deleteByTag(String tag) {
-//		if(userRepository.existsByTag(tag) != null) {
-//			return userRepository.deleteByTag(tag);
-//		}
-//		return null;
-//	}
 }

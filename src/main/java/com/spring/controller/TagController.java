@@ -30,10 +30,10 @@ public class TagController {
     
     
     @GetMapping("{tag}")
-    public ResponseEntity<?> findByTagname(@PathVariable String tag) {
-        List<Tag> listOfTag = (List<Tag>) tagService.findByTagname(tag);
-        if (listOfTag != null) {
-            return new ResponseEntity<>(listOfTag, HttpStatus.OK);
+    public ResponseEntity<?> findByTag(@PathVariable String tag) {
+        String category = tagService.findByTag(tag);
+        if (category != null) {
+            return new ResponseEntity<>(category, HttpStatus.OK);
         } else
             return new ResponseEntity<>("No tag Found", HttpStatus.BAD_REQUEST);
     }
@@ -48,27 +48,5 @@ public class TagController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-    
-//    @PutMapping("{tag}")
-//    public ResponseEntity<?> updateTag(@RequestBody Tag tag, @PathVariable("tag") String t) {
-//        if (t!="" && Objects.nonNull(t)) {
-//            Tag tagUpdateResp = tagService.update(tag, t);
-//            if (Objects.nonNull(tagUpdateResp)) {
-//                return new ResponseEntity<>(tagUpdateResp, HttpStatus.CREATED);
-//            } 
-//        }
-//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//    }
-//    
-//    
-//    @DeleteMapping("{tag}")
-//    public ResponseEntity<?> deleteByTagname(@PathVariable String tag) {
-//    	if(tagService.deleteByTag(tag) != null)
-//    	{
-//            return new ResponseEntity<Object>(true, HttpStatus.OK);
-//        } 
-//        return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-//    }
     
 }

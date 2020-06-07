@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import com.spring.model.Log;
 import com.spring.service.LogService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +20,10 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/logs")
 public class LogController {
-
+	
+	LocalTime localTime;
+	LocalDate localDate;
+	
     @Autowired
     LogService logService;
     
@@ -41,6 +49,8 @@ public class LogController {
 
     @PostMapping
     public ResponseEntity<?> addLog(@RequestBody Log log) {
+    	log.setTime(localTime.now().toString());
+    	log.setDate(localDate.now().toString());
         Log logSaveResp = logService.save(log);
         if (Objects.nonNull(logSaveResp)) {
             return new ResponseEntity<Log>(logSaveResp, HttpStatus.CREATED);
@@ -51,9 +61,17 @@ public class LogController {
     
     
     @PutMapping("{id}")
-    public ResponseEntity<?> updateLog(@RequestBody Log log, @PathVariable("id") Integer id) {
-        if (id > 0 && Objects.nonNull(log)) {
-            Log logUpdateResp = logService.update(log, id);
+    public ResponseEntity<?> updateLog(@PathVariable("id") Integer id) {
+        if (id > 0) {
+        	Log logSearchResp = logService.findById(id);
+        	long d = Duration.between(localTime.parse(logSearchResp.getTime()), localTime.now()).getSeconds();
+        	if(d<0) {
+        		d = d+86400;
+        	}
+			logSearchResp.setCompleted(true);
+			logSearchResp.setDuration(d/60);  
+        	
+            Log logUpdateResp = logService.update(logSearchResp, id);
             if (Objects.nonNull(logUpdateResp)) {
                 return new ResponseEntity<>(logUpdateResp, HttpStatus.CREATED);
             } 
